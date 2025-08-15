@@ -8,32 +8,21 @@ const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL,
-//     credentials: true,
-//   })
-// );
-
 const allowedOrigins = [
-  process.env.CLIENT_URL,
-  process.env.PROD_CLIENT_URL,
-].filter(Boolean); // remove undefined/null
+  process.env.CLIENT_URL,        // Dev URL
+  process.env.PROD_CLIENT_URL    // Prod URL
+];
 
-const corsOptions = {
-  origin: (origin, callback) => {
+app.use(cors({
+  origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      // allow server-to-server / Postman (no origin) and your listed origins
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(new Error('Not allowed by CORS'));
   },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // preflight
-
+  credentials: true
+}));
 
 
 //image upload
