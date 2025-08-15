@@ -58,15 +58,15 @@ route.delete('/event/:id',checkAdminAuth, EventController.eventdelete);
 route.post('/teamInsert',checkAdminAuth, TeamController.teaminsert)
 route.get('/teamDisplay', TeamController.teamdisplay)
 route.get('/teamview/:id', TeamController.teamview)
-route.put('/team/:_id',checkAdminAuth, TeamController.teamupdate)
-route.delete('/team/:_id',checkAdminAuth, TeamController.teamdelete)
+route.put('/team/:id',checkAdminAuth, TeamController.teamupdate)
+route.delete('/team/:id',checkAdminAuth, TeamController.teamdelete)
 
 //placement desk
 route.post('/placementInsert',checkAdminAuth, placementController.placementinsert)
 route.get('/placementDisplay', placementController.placementdisplay)
 route.get('/placementview/:id', placementController.placementview)
-route.put('/placement/:_id',checkAdminAuth, placementController.placementupdate)
-route.delete('/placement/:_id',checkAdminAuth, placementController.placementdelete)
+route.put('/placement/:id',checkAdminAuth, placementController.placementupdate)
+route.delete('/placement/:id',checkAdminAuth, placementController.placementdelete)
 
 //contactpage
 route.post('/contactInsert', ContactController.contactInsert);
