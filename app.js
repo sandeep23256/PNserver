@@ -14,21 +14,38 @@ const cors = require("cors");
 //     credentials: true,
 //   })
 // );
-const allowedOrigins = [
-  process.env.CLIENT_URL,        // Dev URL
-  process.env.PROD_CLIENT_URL    // Prod URL
-];
 
-app.use(cors({
-  origin: function (origin, callback) {
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.PROD_CLIENT_URL,
+].filter(Boolean); // remove undefined/null
+
+const corsOptions = {
+  origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+      // allow server-to-server / Postman (no origin) and your listed origins
+      return callback(null, true);
     }
+    return callback(new Error('Not allowed by CORS'));
   },
-  credentials: true
-}));
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // preflight
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Vary', 'Origin');
+  }
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
 
 
 //image upload
