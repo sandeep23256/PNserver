@@ -17,7 +17,7 @@ route.post("/user/register", UserController.register);
 route.post("/user/login", UserController.login);
 route.get("/user/profile", checkUserAuth, UserController.profile);
 route.get("/user/home", checkUserAuth, UserController.home);
-route.get("/user/logout", checkUserAuth, UserController.logOut);
+route.post("/user/logout", checkUserAuth, UserController.logOut);
 //Admin
 route.post('/register', AdminController.register)
 route.post('/login', AdminController.login)
