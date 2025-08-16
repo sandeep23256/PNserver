@@ -126,7 +126,7 @@ static logOut = async (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,   // jo set karte time diya tha wohi repeat karna zaruri hai
        secure: true, 
-      sameSite: "strict",
+      sameSite: "None",
       path: "/"         // ensure same path as when set
     });
 
