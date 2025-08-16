@@ -3,12 +3,12 @@ const cloudinary = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const adminModel = require('../models/admin');
 
-require('dotenv').config(); 
+require('dotenv').config();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 class AdminController {
@@ -93,8 +93,8 @@ class AdminController {
             // ✅ Set token in HTTP-only cookie
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: false, // set true if using https
-                sameSite: 'lax',
+                secure: true,             // HTTPS ke liye must
+                sameSite: 'None',         // cross-site cookie allow
                 maxAge: 24 * 60 * 60 * 1000
             });
 

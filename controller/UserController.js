@@ -3,12 +3,12 @@ const cloudinary = require("cloudinary");
 const jwt = require("jsonwebtoken");
 const userModel = require('../models/user');
 
-require('dotenv').config(); 
+require('dotenv').config();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 class UserController {
@@ -37,8 +37,8 @@ class UserController {
             // Set token in cookie
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: false,
-                sameSite: 'lax',
+                secure: true,             // HTTPS ke liye must
+                sameSite: 'None',         // cross-site cookie allow
                 maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
             });
 
@@ -80,8 +80,8 @@ class UserController {
             // Set token in cookie
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: false,
-                sameSite: "lax",
+                secure: true,             // HTTPS ke liye must
+                sameSite: 'None',         // cross-site cookie allow
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
@@ -101,7 +101,7 @@ class UserController {
     };
 
 
-   static home = async (req, res) => {
+    static home = async (req, res) => {
         res.status(200).json({ message: 'Welcome to  Home ✅' });
     };
 
@@ -121,7 +121,7 @@ class UserController {
     };
 
     // Logout
-     static logOut = async (req, res) => {
+    static logOut = async (req, res) => {
         try {
             res.clearCookie("token");
             return res.status(200).json({
