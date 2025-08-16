@@ -26,8 +26,8 @@ route.get('/admin/dashboard',checkAdminAuth, AdminController.dashboard)
 route.get('/profile',checkAdminAuth, AdminController.profile)
 
 //slider controller
-route.get('/getAllSlides',checkAdminAuth, SliderController.getAllSlides);
-route.post('/createSlide', SliderController.createSlide);
+route.get('/getAllSlides',SliderController.getAllSlides);
+route.post('/createSlide', checkAdminAuth, SliderController.createSlide);
 route.put('/slider/:id',checkAdminAuth, SliderController.updateSlide);
 route.delete('/slider/:id',checkAdminAuth, SliderController.deleteSlide);
 

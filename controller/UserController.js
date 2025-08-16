@@ -121,18 +121,25 @@ class UserController {
     };
 
     // Logout
-    static logOut = async (req, res) => {
-        try {
-            res.clearCookie("token");
-            return res.status(200).json({
-                success: true,
-                message: "Logged out successfully",
-            });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ success: false, message: "Internal Server Error" });
-        }
-    };
+static logOut = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,   // jo set karte time diya tha wohi repeat karna zaruri hai
+       secure: true, 
+      sameSite: "strict",
+      path: "/"         // ensure same path as when set
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 }
 
 module.exports = UserController;
