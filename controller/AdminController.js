@@ -116,38 +116,6 @@ class AdminController {
             });
         }
     };
-
-    // Change Password
-    static changePassword = async (req, res) => {
-        try {
-            const { id } = req.params;
-            const { oP, nP } = req.body;
-
-            if (!oP || !nP) {
-                return res.status(400).json({ success: false, message: "Old and new passwords are required" });
-            }
-
-            const admin = await adminModel.findById(id);
-            if (!admin) {
-                return res.status(404).json({ success: false, message: "Admin not found" });
-            }
-
-            const isMatch = await bcrypt.compare(oP, admin.password);
-            if (!isMatch) {
-                return res.status(400).json({ success: false, message: "Old password is incorrect" });
-            }
-
-            const hashedPassword = await bcrypt.hash(nP, 10);
-            admin.password = hashedPassword;
-            await admin.save();
-
-            return res.status(200).json({ success: true, message: "Password changed successfully" });
-        } catch (error) {
-            console.error("Change password error:", error);
-            return res.status(500).json({ success: false, message: "Internal server error" });
-        }
-    };
-
     // Logout
     static logOut = async (req, res) => {
         try {

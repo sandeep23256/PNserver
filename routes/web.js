@@ -21,33 +21,32 @@ route.post("/user/logout", checkUserAuth, UserController.logOut);
 //Admin
 route.post('/register', AdminController.register)
 route.post('/login', AdminController.login)
-route.put('/changePassword/:id',checkAdminAuth, AdminController.changePassword)
 route.post('/logout',checkAdminAuth, AdminController.logOut)
 route.get('/admin/dashboard',checkAdminAuth, AdminController.dashboard)
 route.get('/profile',checkAdminAuth, AdminController.profile)
 
 //slider controller
-route.get('/getAllSlides', SliderController.getAllSlides);
+route.get('/getAllSlides',checkAdminAuth, SliderController.getAllSlides);
 route.post('/createSlide', SliderController.createSlide);
-route.put('/slider/:id', SliderController.updateSlide);
-route.delete('/slider/:id', SliderController.deleteSlide);
+route.put('/slider/:id',checkAdminAuth, SliderController.updateSlide);
+route.delete('/slider/:id',checkAdminAuth, SliderController.deleteSlide);
 
 //Technology
-route.post('/technologyInsert', TechnologyController.technologyInsert);
+route.post('/technologyInsert',checkAdminAuth, TechnologyController.technologyInsert);
 route.get('/technologyDisplay', TechnologyController.technologyDisplay);
 route.get('/technologyView/:id', TechnologyController.technologyView);
 route.put('/technology/:id',checkAdminAuth, TechnologyController.technologyUpdate);
 route.delete('/technology/:id',checkAdminAuth, TechnologyController.technologyDelete);
 
 //portfolio
-route.post('/portfolioInsert', PortfolioController.portfolioInsert)
+route.post('/portfolioInsert',checkAdminAuth, PortfolioController.portfolioInsert)
 route.get('/portfolioDisplay', PortfolioController.portfolioDisplay)
 route.get('/portfolioView/:id', PortfolioController.portfolioView)
 route.delete('/portfolio/:id',checkAdminAuth, PortfolioController.portfolioDelete)
 route.put('/portfolio/:id',checkAdminAuth, PortfolioController.portfolioUpdate)
 
 //events
-route.post('/eventInsert', EventController.eventinsert);
+route.post('/eventInsert', checkAdminAuth,EventController.eventinsert);
 route.get('/eventDisplay', EventController.eventdisplay);
 route.get('/eventView/:id', EventController.eventview);
 route.put('/event/:id',checkAdminAuth, EventController.eventupdate);
